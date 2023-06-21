@@ -1,22 +1,21 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  
+
   boot.kernelModules = [ "amdgpu" ];
 
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-  
-  hardware.enableAllFirmware = true;   
+
+  hardware.enableAllFirmware = true;
 
   networking.hostName = "nixos"; # Define your hostname.
 
@@ -50,9 +49,7 @@
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
-  hardware.bluetooth = {
-    enable = true;
-  };
+  hardware.bluetooth = { enable = true; };
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -67,9 +64,7 @@
     description = "Martin Brignall";
     extraGroups = [ "networkmanager" "wheel" "wireless" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      firefox
-    ];
+    packages = with pkgs; [ firefox ];
   };
 
   # Allow unfree packages
@@ -78,18 +73,21 @@
   # System packages
   environment.systemPackages = with pkgs; [
     alacritty
-    bemenu
+    bc
+    bfcal
     blueberry
+    brightnessctl
     clang
     coreutils
     direnv
-    dracula-theme
     editorconfig-core-c
     emacs
+    eww-wayland
     fd
     fuzzel
     git
     glib
+    pkgs.theme-obsidian2
     gnome3.adwaita-icon-theme
     google-chrome
     graphviz
@@ -103,7 +101,9 @@
     nixfmt
     nodejs_18
     pandoc
+    pavucontrol
     plantuml
+    powerstat
     python39
     python39Packages.black
     python39Packages.pyflakes
@@ -131,13 +131,16 @@
   ];
 
   nixpkgs.overlays = [
-    (import (builtins.fetchTarball https://github.com/nix-community/emacs-overlay/archive/master.tar.gz))
-  ];
-  
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "Hack" "DroidSansMono" ]; })
+    (import (builtins.fetchTarball
+      "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz"))
   ];
 
+  fonts.fonts = with pkgs;
+    [
+      (nerdfonts.override {
+        fonts = [ "FiraCode" "FiraMono" "Hack" "DroidSansMono" ];
+      })
+    ];
 
   # Disable the X11 window system.
   services.xserver.enable = false;
@@ -147,7 +150,6 @@
 
   # Enable ZSH
   programs.zsh.enable = true;
-
 
   # If you use elogind (default is setuid)
   # security.pam.services.sway = {
