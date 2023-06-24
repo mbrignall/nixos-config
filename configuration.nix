@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
-{
+let configRepoUrl = "https://github.com/mbrignall/sway-dotfiles.git";
+
+in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -84,6 +86,7 @@
     emacs
     eww-wayland
     fd
+    font-awesome_5
     fuzzel
     git
     glib
@@ -100,6 +103,7 @@
     maim
     nixfmt
     nodejs_18
+    pkgs.openai
     pandoc
     pavucontrol
     plantuml
