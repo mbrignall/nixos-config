@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
-let configRepoUrl = "https://github.com/mbrignall/sway-dotfiles.git";
-
-in {
+{
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
