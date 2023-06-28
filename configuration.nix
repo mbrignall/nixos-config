@@ -19,9 +19,7 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 
-  # Enable networking
   networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -43,8 +41,9 @@
 
   # Configure keymap in X11
   console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
+    packages = [ pkgs.terminus_font ];
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-i22b.psf.gz";
+    useXkbConfig = true; # use xkbOptions in tty.
   };
 
   # Enable sound with pipewire.
@@ -63,7 +62,17 @@
   users.users.mbrignall = {
     isNormalUser = true;
     description = "Martin Brignall";
-    extraGroups = [ "networkmanager" "wheel" "wireless" "docker" "audio" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "wireless"
+      "docker"
+      "audio"
+      "libvirtd"
+      "input"
+      "disk"
+      "kvm"
+    ];
     shell = pkgs.zsh;
     packages = with pkgs; [ firefox ];
   };
@@ -89,15 +98,17 @@
     fd
     font-awesome_5
     fuzzel
+    gcc
     gsettings-desktop-schemas
     git
+    gimp
     glib
     gnome3.adwaita-icon-theme
     google-chrome
     graphviz
     grim
-    iwd
-    iwgtk
+    gnumake
+    hugo
     jdk17
     jq
     nodePackages.js-beautify
@@ -106,7 +117,7 @@
     mako
     maim
     nixfmt
-    nodejs_18
+    nodejs
     pkgs.openai
     pandoc
     pavucontrol
@@ -120,6 +131,7 @@
     python39Packages.nose
     python39Packages.pytest
     python311Packages.weasyprint
+    qemu
     ripgrep
     shellcheck
     shfmt
@@ -128,6 +140,7 @@
     nodePackages.stylelint
     swayidle
     swaylock
+    terminus-nerdfont
     html-tidy
     vim
     vulkan-loader
@@ -136,6 +149,7 @@
     wl-clipboard
     wdisplays
     xdg-utils
+    yarn
     zsh
   ];
 
@@ -144,17 +158,22 @@
       "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz"))
   ];
 
-  fonts.fonts = with pkgs;
-    [
+  fonts = {
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      font-awesome
       (nerdfonts.override {
-        fonts = [ "FiraCode" "FiraMono" "Hack" "DroidSansMono" ];
+        fonts = [ "FiraCode" "FiraMono" "Hack" "DroidSansMono" "Meslo" ];
       })
     ];
+  };
 
   # Disable the X11 window system.
 
   services.xserver.enable = false;
-
+  virtualisation.libvirtd.enable = true;
   # Enable Sway.
   programs.sway.enable = true;
   programs.hyprland.enable = true;
