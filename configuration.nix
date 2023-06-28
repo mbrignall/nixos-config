@@ -21,6 +21,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -62,7 +63,7 @@
   users.users.mbrignall = {
     isNormalUser = true;
     description = "Martin Brignall";
-    extraGroups = [ "networkmanager" "wheel" "wireless" ];
+    extraGroups = [ "networkmanager" "wheel" "wireless" "docker" "audio" ];
     shell = pkgs.zsh;
     packages = with pkgs; [ firefox ];
   };
@@ -80,22 +81,27 @@
     clang
     coreutils
     direnv
+    docker
     editorconfig-core-c
     emacs
+    emptty
     eww-wayland
     fd
     font-awesome_5
     fuzzel
+    gsettings-desktop-schemas
     git
     glib
-    pkgs.theme-obsidian2
     gnome3.adwaita-icon-theme
     google-chrome
     graphviz
     grim
+    iwd
+    iwgtk
     jdk17
     jq
     nodePackages.js-beautify
+    karlender
     libnotify
     mako
     maim
@@ -113,6 +119,7 @@
     pipenv
     python39Packages.nose
     python39Packages.pytest
+    python311Packages.weasyprint
     ripgrep
     shellcheck
     shfmt
@@ -145,25 +152,18 @@
     ];
 
   # Disable the X11 window system.
+
   services.xserver.enable = false;
 
   # Enable Sway.
   programs.sway.enable = true;
+  programs.hyprland.enable = true;
 
   # Enable ZSH
   programs.zsh.enable = true;
 
-  # If you use elogind (default is setuid)
-  # security.pam.services.sway = {
-  #   startSession = true;
-  #   stopSession = true;
-  # };
-
-  # If you want to use dmenu
-  # programs.dmenu.enable = true;
-
   # If you want to use waybar as your swaybar
-  # programs.waybar.enable = true;
+  programs.waybar.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
