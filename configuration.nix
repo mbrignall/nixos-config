@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -77,6 +78,8 @@
     packages = with pkgs; [ firefox ];
   };
 
+  users.extraGroups.docker.members = [ "mbrignall" ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -88,9 +91,11 @@
     blueberry
     brightnessctl
     clang
+    cmake
     coreutils
     direnv
     docker
+    docker-compose
     editorconfig-core-c
     emacs
     emptty
@@ -107,15 +112,19 @@
     google-chrome
     graphviz
     grim
+    python311Packages.grip
     gnumake
     hugo
+    ispell
     jdk17
     jq
     nodePackages.js-beautify
     karlender
     libnotify
+    libtool
     mako
     maim
+    networkmanager-fortisslvpn
     nixfmt
     nodejs
     pkgs.openai
@@ -133,6 +142,7 @@
     python311Packages.weasyprint
     qemu
     ripgrep
+    rnix-lsp
     shellcheck
     shfmt
     slack
@@ -143,11 +153,13 @@
     terminus-nerdfont
     html-tidy
     vim
+    virt-manager
     vulkan-loader
     waybar
     wayland
     wl-clipboard
     wdisplays
+    wget
     xdg-utils
     yarn
     zsh
@@ -170,10 +182,33 @@
     ];
   };
 
+  # home.file.".config" = {
+  #   source = "sway-dotfiles";
+  #   target = ".config";
+  # };
+
   # Disable the X11 window system.
 
   services.xserver.enable = false;
   virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
+  virtualisation.docker.enable = true;
+
+  # # Home Manager
+  # imports = [ <home-manager/nixos> ];
+  # home-manager.users.mbrignall = {
+  #   home.stateVersion = "23.05";
+  #   home.packages = [ ];
+
+  #   home.file = {
+  #     ".config".source = builtins.fetchGit {
+  #       url = "https://github.com/mbrignall/sway-dotfiles.git";
+  #       ref = "main";
+  #     };
+  #     ".config".target = ".config";
+  #   };
+  # };
+
   # Enable Sway.
   programs.sway.enable = true;
   programs.hyprland.enable = true;
@@ -187,5 +222,5 @@
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken.
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 }
