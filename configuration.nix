@@ -112,6 +112,7 @@
     google-chrome
     graphviz
     grim
+    gvfs
     python311Packages.grip
     gnumake
     hugo
@@ -125,6 +126,8 @@
     mako
     maim
     networkmanager-fortisslvpn
+    ntfs3g
+    exfat
     nixfmt
     nodejs
     pkgs.openai
@@ -152,8 +155,11 @@
     swaylock
     terminus-nerdfont
     html-tidy
+    udisks
+    usermount
     vim
     virt-manager
+    vlc
     vulkan-loader
     waybar
     wayland
@@ -161,6 +167,8 @@
     wdisplays
     wget
     xdg-utils
+    xfce.thunar
+    xfce.thunar-volman
     yarn
     zsh
   ];
@@ -193,6 +201,27 @@
   virtualisation.libvirtd.enable = true;
   programs.dconf.enable = true;
   virtualisation.docker.enable = true;
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_13;
+    ensureDatabases = [ "marketdb" ];
+    ensureUsers = [
+      {
+        name = "postgres";
+        ensurePermissions = { "DATABASE marketdb" = "ALL PRIVILEGES"; };
+      }
+      {
+        name = "market";
+        ensurePermissions = { "DATABASE marketdb" = "ALL PRIVILEGES"; };
+      }
+    ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all all  trust
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128      trust
+    '';
+  };
 
   # # Home Manager
   # imports = [ <home-manager/nixos> ];
