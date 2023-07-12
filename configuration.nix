@@ -116,6 +116,7 @@
     python311Packages.grip
     gnumake
     hugo
+    imagemagick
     ispell
     jdk17
     jq
@@ -198,6 +199,7 @@
   # Disable the X11 window system.
 
   services.xserver.enable = false;
+  services.flatpak.enable = true;
   virtualisation.libvirtd.enable = true;
   programs.dconf.enable = true;
   virtualisation.docker.enable = true;
