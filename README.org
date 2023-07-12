@@ -15,20 +15,13 @@ To use these configuration files, clone this repository to your local machine an
 
 Remember, any changes to these configuration files must be followed by running `sudo nixos-rebuild switch` to apply the changes.
 
-* Laptop Configuration: ThinkPad P16s (Ryzen Pro 7)
+* Laptop Configuration
 
 This NixOS configuration provides an example of how you can configure the ThinkPad P16s laptop with Sway, a popular tiling window manager for Wayland. The configuration is tailored to take advantage of the laptop's hardware and optimize the user experience.
-
-Here are some key points:
 
 ** Sway Window Manager
 
 Sway is a highly customizable tiling window manager for Wayland, offering a lightweight and efficient alternative to traditional X Window Managers. It provides a sleek, keyboard-driven workflow and excellent multi-monitor support.
-
-** Hardware Configuration
-
-- ThinkPad P16s equipped with an AMD Ryzen Pro 7 processor.
-
 
 ** Customization and Personalization
 
@@ -45,6 +38,10 @@ You can also take a look at my Doom config [[https://github.com/mbrignall/doom-e
 * Warning
 
 Please be aware that these configuration files are tailored to my specific hardware and personal preferences. You are welcome to use them as a reference, but blindly copying them may not work and could even harm your system. Always review and understand configuration files before using them.
+
+* Learning
+
+This repo is a work in progress. It was to help develop my understanding of the Nix ecosystem and daily drive the OS. I have learned a lot and love to share my progress to hopefully help you too!
 
 * Contributing
 
