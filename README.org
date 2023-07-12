@@ -43,6 +43,12 @@ Please be aware that these configuration files are tailored to my specific hardw
 
 This repo is a work in progress. It was to help develop my understanding of the Nix ecosystem and daily drive the OS. I have learned a lot and love to share my progress to hopefully help you too!
 
+*** Future steps
+
+- Learn Home Manager
+- Build a Flake
+- Further customise and refine configuration
+
 * Contributing
 
 While this is a personal project, I'm always open to suggestions and improvements. Feel free to open an issue or pull request.
